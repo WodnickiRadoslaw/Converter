@@ -4,12 +4,12 @@ layout = [
     [
         sg.Input(key='-INPUT-'),
         sg.Spin(['km to m', 'm to km', 'kg to g', 'g to kg',
-                'sec to min', 'min to sec'], key='-UNITS-'),
-        sg.Button('Convert', key='-CONVERT-')
+                'sec to min', 'min to sec', 'hr to min', 'min to hr', "C to F", "F to C"], key='-UNITS-'),
+        sg.Button('Convert!', key='-CONVERT-')
     ],
-    [sg.Text('Output', key='-OUTPUT-')]
+    [sg.Text('Output: ', key='-OUTPUT-')]
 ]
-window = sg.Window('Basic Converter', layout)
+window = sg.Window('Basic Converter', layout, size=(485, 100))
 while True:
     event, values = window.read()
 
@@ -37,7 +37,20 @@ while True:
                     output_string = f'{input_value} seconds are {output} minute(s).'
                 case 'min to sec':
                     output = round(float(input_value) * 60, 2)
-                    output_string = f'{input_value} minute(S) are {output} seconds.'
+                    output_string = f'{input_value} minute(s) are {output} seconds.'
+                case 'hr to min':
+                    output = round(float(input_value) * 60, 2)
+                    output_string = f'{input_value} hour(s) are {output} minutes.'
+                case 'min to hr':
+                    output = round(float(input_value) / 60, 2)
+                    output_string = f'{input_value} minute(s) are {output} hours.'
+                case 'C to F':
+                    output = round(float(input_value) * 1.8 + 32, 2)
+                    output_string = f'{input_value} Celcius is {output} Fahrenheit.'
+                case 'F to C':
+                    output = round(float((input_value) - 32)
+                                   * 0.55555555555, 2)
+                    output_string = f'{input_value} Fahrenheit is {output} Celcius.'
 
             window['-OUTPUT-'].update(output_string)
         else:
